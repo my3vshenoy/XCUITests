@@ -78,5 +78,35 @@ class XCTUIAyeAyeUITests: XCTestCase {
         XCTAssert(navBarTitle.waitForExistence(timeout: 0.5))
     }
     
+    // Check if dismiss button is not present after x seconds
+    func testLoginDismiss() throws {
+        app.buttons["Login"].tap()
+        let dismissButton = app.buttons["Dismiss"]
+        dismissButton.tap()
+        XCTAssertFalse(dismissButton.waitForExistence(timeout: 0.5))
+    }
     
+    // TypeText method
+    func testUserNameFieldInput() {
+        app.buttons["Login"].tap()
+        
+        app.textFields.element.tap()
+        app.typeText("test")
+        
+        XCTAssertNotEqual(app.textFields.element.value as! String, "")
+    }
+    
+    // Use individual key method
+    func testPasswordInput() {
+        app.buttons["Login"].tap()
+        
+        app.secureTextFields.element.tap()
+        app.keys["p"].tap()
+        app.keys["a"].tap()
+        app.keys["s"].tap()
+        app.keys["s"].tap()
+        app.keyboards.buttons["Return"].tap()
+        
+        XCTAssertNotEqual(app.secureTextFields.element.value as! String, "")
+    }
 }
