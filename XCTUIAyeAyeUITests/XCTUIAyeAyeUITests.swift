@@ -54,9 +54,6 @@ class XCTUIAyeAyeUITests: XCTestCase {
     func testLoginForm() throws {
         app.buttons["loginButton"].tap()
         
-        let navBar = app.navigationBars.element
-        XCTAssert(navBar.exists)
-        
         let userName = app.textFields["Username"]
         XCTAssert(userName.exists)
         
@@ -71,4 +68,15 @@ class XCTUIAyeAyeUITests: XCTestCase {
         XCTAssert(dismiss.exists)
         
     }
+    
+    func testNavBarAppearance() {
+        app.buttons["loginButton"].tap()
+        
+        let navBar = app.navigationBars.element
+        let navBarTitle = app.navigationBars.staticTexts["Login"]
+        XCTAssert(navBar.exists)
+        XCTAssert(navBarTitle.waitForExistence(timeout: 0.5))
+    }
+    
+    
 }

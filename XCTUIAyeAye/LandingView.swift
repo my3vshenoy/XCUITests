@@ -28,6 +28,9 @@ struct LandingView: View {
                     LoginView()
                 }
         }
+        .sheet(isPresented: $showLogin) {
+            LoginView()
+        }
         
     }
 }
