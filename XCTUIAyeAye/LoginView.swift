@@ -14,6 +14,8 @@ struct LoginView: View {
     // Environment property so we can dismiss the login sheet
     @Environment(\.presentationMode) var presentationMode
     
+    @State private var showAlert = false
+    
     var body: some View {
         NavigationView {
             Form {
@@ -25,6 +27,8 @@ struct LoginView: View {
                 Button {
                     if user.login() {
                         presentationMode.wrappedValue.dismiss()
+                    } else {
+                        showAlert = true
                     }
                 } label: {
                     Text("Login")
@@ -38,6 +42,11 @@ struct LoginView: View {
                 Image(systemName: "xmark.circle")
                     .accessibilityLabel("Dismiss")
             })
+        }
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text("Oops!"), message: Text("Login failed, try again."), dismissButton: Alert.Button.default(Text("OK"), action: {
+                showAlert = false
+            }))
         }
     }
 }

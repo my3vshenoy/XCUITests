@@ -109,4 +109,30 @@ class XCTUIAyeAyeUITests: XCTestCase {
         
         XCTAssertNotEqual(app.secureTextFields.element.value as! String, "")
     }
+    
+    // Login Action
+    func testLoginAction() {
+        app.buttons["Login"].tap()
+        
+        app.textFields.element.tap()
+        app.textFields.element.typeText("test")
+        
+        app.secureTextFields.element.tap()
+        app.secureTextFields.element.typeText("pass")
+        app.keyboards.buttons["Return"].tap()
+        
+        let loginButton = app.buttons["loginNow"]
+        loginButton.tap()
+        XCTAssertFalse(loginButton.waitForExistence(timeout: 0.5))
+    }
+    
+    func testAlertForLoginFailure() {
+        app.buttons["Login"].tap()
+        
+        app.buttons["loginNow"].tap()
+        XCTAssertTrue(app.alerts.element.waitForExistence(timeout: 0.5))
+        app.alerts.element.buttons["OK"].tap()
+        
+        XCTAssertFalse(app.alerts.element.waitForExistence(timeout: 0.5))
+    }
 }
